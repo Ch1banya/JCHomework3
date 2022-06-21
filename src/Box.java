@@ -2,41 +2,53 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Box<T extends Fruit> {
-    private ArrayList<T> fruits;
+    private ArrayList<T> items;
 
     public Box(T... items) {
-        this.fruits = new ArrayList<T>(Arrays.asList(items));
+        this.items = new ArrayList<T>(Arrays.asList(items));
     }
+
+  /*  public void add(T... items) {
+        this.items.addAll(Arrays.asList(items));
+    }
+  */
 
     public void add(T... items) {
-        this.fruits.addAll(Arrays.asList(items));
+        if  (this.items.equals(items))
+        {
+            this.items.addAll(Arrays.asList(items));
+            clear();
+        }
     }
 
+
     public void remove(T... items) {
-        for (T item: items) this.fruits.remove(item);
+        for (T item: items) this.items.remove(item);
     }
 
     public ArrayList<T> getItems() {
-        return new ArrayList<T>(fruits);
+        return new ArrayList<T>(items);
     }
 
     public void clear() {
-        fruits.clear();
+        items.clear();
     }
 
     public float getWeight() {
-        if (fruits.size() == 0) return 0;
+        if (items.size() == 0) return 0;
         float weight = 0;
-        for (T item: fruits) weight += item.getWeight();
+        for (T item: items) weight += item.getWeight();
         return weight;
+
     }
+
 
     public boolean compare(Box box) {
         return this.getWeight() == box.getWeight();
     }
 
     public void transfer(Box<? super T> box) {
-        box.fruits.addAll(this.fruits);
+        box.items.addAll(this.items);
         clear();
     }
 }
